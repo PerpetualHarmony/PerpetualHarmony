@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import Grid from 'react-bootstrap/lib/Grid'
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
@@ -29,47 +29,55 @@ class SignIn extends React.Component {
       password: event.target.value
     })
   }
-
-  handleSubmit() {
-
-  }
-
-  getValidationState() {
-    
-  }
+	
+	onSubmit() {
+		$.ajax({
+		  type:'POST',
+		  url: 'http://localhost:3000/users/signIn',
+		  data: JSON.stringify({username: this.state.username, password: this.state.password}),
+		  contentType: 'application/json',
+		  success: (username) => {
+        
+		  }
+		});
+	}
 
   render () {
     return (
-      <Grid>
-        <Row>
-          <Col xs={7} sm={5} md={4} className="authComponent">
-            <h1 className="welcome">Welcome Back</h1>
-          </Col>
-        </Row>
-        
-        <Form horizontal>
-          <FormGroup controlId="formHorizontalEmail">
-            <Col xs={7} sm={5} md={4} className="authComponent">
-              <FormControl type="email" placeholder="Email address" onChange={this.onUserNameChange.bind(this)} />
-            </Col>
-          </FormGroup>
+          <Grid>
+            <Row>
+              <Col xs={7} sm={5} md={4} className="authComponent">
+                <h1 className="welcome">Welcome Back</h1>
+              </Col>
+            </Row>
+            
+            <Form horizontal>
+              <Row>
+                <Col xs={7} sm={5} md={4} className="authComponent">
+                  <FormGroup controlId="formHorizontalEmail">
+                    <FormControl type="email" placeholder="Email address" onChange={this.onUserNameChange.bind(this)} />
+                  </FormGroup>
+                </Col>
+              </Row>
 
-          <FormGroup controlId="formHorizontalPassword">
-            <Col xs={7} sm={5} md={4} className="authComponent">
-              <FormControl type="password" placeholder="Password" onChange={ this.onPasswordChange.bind(this) }/>
-            </Col>
-          </FormGroup>
+              <Row>
+                <Col xs={7} sm={5} md={4} className="authComponent">
+                  <FormGroup controlId="formHorizontalPassword">
+                    <FormControl type="password" placeholder="Password" />
+                  </FormGroup>
+                </Col>
+              </Row>
 
-          <FormGroup>
-            <Col xs={7} sm={5} md={4} className="authComponent">
-              <Button type="submit" bsStyle="primary" block> Sign in </Button>
-            </Col>
-          </FormGroup>
-        </Form>
-      </Grid>
-    )
+              <Row>
+                <Col xs={7} sm={5} md={4} className="authComponent">
+                  <FormGroup>
+                      <Button type="submit" bsStyle="primary" block onClick={this.onSubmit.bind(this)}> Sign in </Button>
+                  </FormGroup>
+                </Col>
+              </Row>
+            </Form>
+          </Grid>
+        )
   }
 }
-
-
 export default SignIn;

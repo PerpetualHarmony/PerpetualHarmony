@@ -1,10 +1,30 @@
-// var db = require('../models/db.js');
-// var User = db.User;
-//Routes will point to this controller
+var model = require('../models/db.js');
 
-  //The controller will then call the methods on the Model
+module.exports = { 
 
-    //Model will query DB
+	users: {
+		signUp: function(req, res) {
+			// req.body contains the username and password
+			var user = req.body;
+			model.user.signUp(user)
+				.then(username => {
+					// not actual username, stored in object have to take it out 
+					console.log('the user is', username)
+				})
+				.catch(error =>{
+					console.log(error);
+				});
+		},
 
+		signIn: function(req, res) {
+			var user = req.body; 
+			model.user.signIn(user)
+				.then(data => {
 
-  //The controller will then pass data back to router
+				})
+				.catch(error => {
+					console.log(error);
+				});
+		}
+	}
+}

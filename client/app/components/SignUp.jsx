@@ -52,45 +52,70 @@ class SignUp extends React.Component {
     else if (length > 0) return 'error';
   }
 
+	onSubmit() {
+		$.ajax({
+		  type:'POST',
+		  url: 'http://localhost:3000/users/signUp',
+		  data: JSON.stringify({username: this.state.username, password: this.state.confirmedPassword}),
+		  contentType: 'application/json',
+		  success: (username) => {
+		  }
+		});
+	}
+
   render () {
-    return (
-      <Grid>
-        <Row>
-          <Col xs={7} sm={6} md={6} className="authComponent">
-            <h1 className="welcome">Pleased to Meet You</h1>
-          </Col>
-        </Row>
-        
-      	<Form horizontal>
-          <FormGroup controlId="formHorizontalEmail">
-            <Col xs={7} sm={5} md={4} className="authComponent">
-              <FormControl type="email" placeholder="Email address" onChange={this.onUserNameChange.bind(this)} />
+      return (
+        <Grid>
+          <Row>
+            <Col xs={7} sm={6} md={6} className="authComponent">
+              <h1 className="welcome">Pleased to Meet You</h1>
             </Col>
-          </FormGroup>
+          </Row>
+          
+          <Form horizontal>
+            <Row>
+              <Col xs={7} sm={5} md={4} className="authComponent">
+                <FormGroup controlId="formHorizontalEmail">
+                  <FormControl 
+                    type="email" 
+                    placeholder="Email address" 
+                    onChange={ this.onUserNameChange.bind(this) } />
+                </FormGroup>
+              </Col>
+            </Row>
 
-          <FormGroup controlId="formHorizontalPassword">
-            <Col xs={7} sm={5} md={4} className="authComponent">
-              <FormControl type="password" placeholder="Password" onChange={ this.onPasswordChange.bind(this) }/>
-            </Col>
-          </FormGroup>
+            <Row>
+              <Col xs={7} sm={5} md={4} className="authComponent">
+                <FormGroup controlId="formHorizontalPassword">
+                  <FormControl 
+                    type="password" 
+                    placeholder="Password"
+                    onChange={ this.onPasswordChange.bind(this) } />
+                </FormGroup>
+              </Col>
+            </Row>
 
-          <FormGroup controlId="formHorizontalPassword">
-            <Col xs={7} sm={5} md={4} className="authComponent">
-              <FormControl 
-                type="password" 
-                placeholder="Confirm password"
-                onChange={ this.onConfPasswordChange.bind(this) } />
-            </Col>
-          </FormGroup>
+            <Row>
+              <Col xs={7} sm={5} md={4} className="authComponent">
+                <FormGroup controlId="formHorizontalPassword">
+                  <FormControl 
+                    type="password" 
+                    placeholder="Confirm password"
+                    onChange={ this.onConfPasswordChange.bind(this) } />
+                </FormGroup>
+              </Col>
+            </Row>
 
-          <FormGroup>
-            <Col xs={7} sm={5} md={4} className="authComponent">
-              <Button onClick={ this.handleSubmit.bind(this) } type="submit" bsStyle="primary" block>Sign in</Button>
-            </Col>
-          </FormGroup>
-      	</Form>
-      </Grid>
-    )
+            <Row>
+              <Col xs={7} sm={5} md={4} className="authComponent">
+                <FormGroup>
+                    <Button type="submit" bsStyle="primary" block onClick={this.onSubmit.bind(this)}>Sign in</Button>
+                </FormGroup>
+              </Col>
+            </Row>
+          </Form>
+        </Grid>
+      )
   }
 }
 
