@@ -29,25 +29,15 @@ class SignIn extends React.Component {
       password: event.target.value
     })
   }
-
-  handleSubmit() {
-
-  }
-
-  getValidationState() {
-    
-  }
 	
 	onSubmit() {
-		console.log('im here');
 		$.ajax({
 		  type:'POST',
 		  url: 'http://localhost:3000/users/signIn',
 		  data: JSON.stringify({username: this.state.username, password: this.state.password}),
 		  contentType: 'application/json',
 		  success: (username) => {
-		  	// here we can store the username maybe? 
-		    console.log('im here');
+        
 		  }
 		});
 	}
@@ -81,7 +71,7 @@ class SignIn extends React.Component {
               <Row>
                 <Col xs={7} sm={5} md={4} className="authComponent">
                   <FormGroup>
-                      <Button type="submit" bsStyle="primary" block> Sign in </Button>
+                      <Button type="submit" bsStyle="primary" block onClick={this.onSubmit.bind(this)}> Sign in </Button>
                   </FormGroup>
                 </Col>
               </Row>

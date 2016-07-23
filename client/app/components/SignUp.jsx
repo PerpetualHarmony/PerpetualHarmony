@@ -53,19 +53,15 @@ class SignUp extends React.Component {
   }
 
 	onSubmit() {
-		console.log('im here');
 		$.ajax({
 		  type:'POST',
 		  url: 'http://localhost:3000/users/signUp',
-		  data: JSON.stringify({username: this.state.username, password: this.state.password}),
+		  data: JSON.stringify({username: this.state.username, password: this.state.confirmedPassword}),
 		  contentType: 'application/json',
 		  success: (username) => {
-		  	// here we can store the username maybe? 
-		    console.log('im here');
 		  }
 		});
 	}
-
 
   render () {
       return (
@@ -113,7 +109,7 @@ class SignUp extends React.Component {
             <Row>
               <Col xs={7} sm={5} md={4} className="authComponent">
                 <FormGroup>
-                    <Button type="submit" bsStyle="primary" block>Sign in</Button>
+                    <Button type="submit" bsStyle="primary" block onClick={this.onSubmit.bind(this)}>Sign in</Button>
                 </FormGroup>
               </Col>
             </Row>

@@ -5,11 +5,26 @@ module.exports = {
 	users: {
 		signUp: function(req, res) {
 			// req.body contains the username and password
-			console.log('i get here', req.body);
+			var user = req.body;
+			model.user.signUp(user)
+				.then(username => {
+					// not actual username, stored in object have to take it out 
+					console.log('the user is', username)
+				})
+				.catch(error =>{
+					console.log(error);
+				});
 		},
 
 		signIn: function(req, res) {
-			console.log('im signing in');
+			var user = req.body; 
+			model.user.signIn(user)
+				.then(data => {
+
+				})
+				.catch(error => {
+					console.log(error);
+				});
 		}
 	}
 }
