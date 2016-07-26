@@ -15,7 +15,8 @@ class MyEatups extends React.Component {
       data: JSON.stringify({userId: sessionToDelete.creatorId, sessionId: sessionToDelete.id}),
       contentType: 'application/json',
       success: () => {
-        console.log('success');
+        console.log('success now refresh');
+        this.props.refresh();
       }
     });
   }
@@ -25,7 +26,7 @@ class MyEatups extends React.Component {
     var userCreatedSessions = this.props.userSession.map((result, index) => 
       <li className="list-group-item"> {result.sessionname} 
       <Button className="deleteButton" bsStyle="danger" bsSize="xsmall" 
-      onClick= { this.onSessionDelete.bind(this, index, this.props) }>Delete</Button>
+      onClick= { this.onSessionDelete.bind(this, index, this.props) } >Delete</Button>
       </li>
       )
 

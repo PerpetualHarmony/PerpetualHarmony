@@ -25,6 +25,12 @@ class Home extends React.Component {
     this.getUserCreatedSession();
   }
 
+  refresh() {
+    this.getAllSessions();
+    this.getUserCreatedSession();
+    this.setState(this.state)
+  }
+
   getUserCreatedSession() {
     
     $.ajax({
@@ -63,10 +69,10 @@ class Home extends React.Component {
         <Grid>
           <Row>
             <Col xs={6} md={5} className="allEatups">
-              <ListOfEatUp sessions = {this.state.sessions} />
+              <ListOfEatUp sessions = {this.state.sessions} refresh={this.refresh.bind(this)}/>
             </Col>
             <Col xs={3} md={3} className="myEatups well">
-              <MyEatups userSession = {this.state.userSession} />
+              <MyEatups userSession = {this.state.userSession} refresh={this.refresh.bind(this)}/>
             </Col>
           </Row>
         </Grid>

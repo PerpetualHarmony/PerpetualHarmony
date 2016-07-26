@@ -9,10 +9,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: auth.loggedIn(),
-      userSession: [],
-      sessions: [],
-      search: ''
+
     }
   }
 
@@ -68,11 +65,11 @@ class App extends React.Component {
                             locationAddress: place.formatted_address}),
       contentType: 'application/json',
       success: (data) => {
-        this.getAllSessions();
-        this.getUserCreatedSession();
-        this.setState(this.state); 
+        this.refresh();
       }
     });
+    var that = this;
+    console.log('going strongggg')
   }
 
   componentDidMount() {
