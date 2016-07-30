@@ -7,74 +7,87 @@ import ListOfEatUp from './Lists.jsx';
 import Grid from 'react-bootstrap/lib/Grid'
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
-
-import auth from '../auth'
+import Tab from 'react-bootstrap/lib/Tab';
+import Nav from 'react-bootstrap/lib/Nav';
+import NavItem from 'react-bootstrap/lib/NavItem';
+import Jumbotron from 'react-bootstrap/lib/Jumbotron';
+import FormGroup from 'react-bootstrap/lib/FormGroup';
+import FormControl from 'react-bootstrap/lib/FormControl';
+import Button from 'react-bootstrap/lib/Button';
+import auth from '../auth.js';
+import CreateEatup from './CreateEatup.jsx';
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedCoordinate: null,
-      userSession: [],
-      sessions: []
+      userRSVPs: this.props.data.userRSVPs,
+      allEatups: this.props.data.allEatups
     }
   }
 
-  componentWillMount() {
-    this.getUserCreatedSession();
-    this.getAllSessions();
+  componentDidMount() {
+    auth.login();
+    var input = document.getElementById('searchTextField');
+    var options = {componentRestrictions: {country: 'us'}};
+    this.setState({ autocomplete: new google.maps.places.Autocomplete(input, options) });
   }
-
-  refresh() {
-    this.getUserCreatedSession();
-    this.getAllSessions();
-    this.setState(this.state);
-  }
-
-  getUserCreatedSession() {
-    var that = this;
-    $.ajax({
-      type:'GET',
-      url: 'http://localhost:3000/sessions/userSessions',
-      data: ({username: auth.getToken()}),
-      contentType: 'application/json',
-      success: (userSession) => {
-        that.setState({
-          userSession: userSession
-        });
-      }
-    });
-  }
-
-  getAllSessions () {
-
-    var that = this;
-
-    $.ajax({
-      type:'GET',
-      url: 'http://localhost:3000/sessions/allSessions',
-      contentType: 'application/json',
-      success: (sessions) => {
-        that.setState({
-          sessions: sessions
-        });
-      }
-    });
+  runThis() {
+    console.log('this state contains:',this.state)
   }
 
   render() {
+    if (this.props.data.currentEatup) {
+      console.log('HOME - current eatup', this.props.data.currentEatup);
+    }
+
     return (
-      <div>
-        <Grid>
-          <Row>
-            <Col xs={6} md={5} className="allEatups">
-              <ListOfEatUp sessions = {this.state.sessions} refresh={this.refresh.bind(this)} />
+      <div className="container">
+      <div className="head">
+        <FormGroup>
+           <FormControl
+              type="text"
+              id="searchTextField"
+              placeholder="Search for a place"
+              onChange={ this.props.handleSearchChange }
+            />
+        </FormGroup>
+
+        <CreateEatup handleSubmit={this.props.handleSubmit} currentPlace={this.props.data.currentPlace}/>
+        <Button onClick={this.runThis.bind(this)}></Button>
+
+        </div>
+
+        <Tab.Container id="left-tabs-example" defaultActiveKey="allEatups">
+          <Row className="clearfix">
+            <Col sm={4}>
+              <Nav bsStyle="pills" stacked>
+                <NavItem eventKey="allEatups">
+                  See EatUps In My Area
+                </NavItem>
+                <NavItem eventKey="myEatups">
+                  EatUps I'm Attending
+                </NavItem>
+              </Nav>
             </Col>
-            <Col xs={5} md={4} className="myEatups">
-              <MyEatups userSession = {this.state.userSession} refresh={this.refresh.bind(this)} />
+            <Col sm={8}>
+              <Tab.Content animation>
+                <Tab.Pane eventKey="allEatups">
+
+                  <ListOfEatUp allEatups = {this.props.data.allEatups} userRSVPs = {this.props.data.userRSVPs} getEatupDetails={this.props.getEatupDetails} currentEatup={this.props.data.currentEatup} refresh={this.props.refresh.bind(this)}/>
+                </Tab.Pane>
+                <Tab.Pane eventKey="myEatups">
+
+                  <MyEatups userRSVPs = {this.props.data.userRSVPs} refresh={this.props.refresh.bind(this)} />
+
+                </Tab.Pane>
+              </Tab.Content>
             </Col>
           </Row>
-        </Grid>
+        </Tab.Container>
+
+
       </div>
     )
   }
