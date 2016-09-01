@@ -48,14 +48,14 @@ class Home extends React.Component {
 
   getAllSessions () {
 
-    var that = this;
+    var innerThisBinding = this;
 
     $.ajax({
       type:'GET',
       url: 'http://localhost:3000/sessions/allSessions',
       contentType: 'application/json',
       success: (sessions) => {
-        that.setState({
+        innerThisBinding.setState({
           sessions: sessions
         });
       }

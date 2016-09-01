@@ -1,9 +1,9 @@
 var model = require('../models/db.js');
 
-module.exports = { 
-  users: { 
-    signUp: function(req, res) { 
-      var user = req.body; 
+module.exports = {
+  users: {
+    signUp: function(req, res) {
+      var user = req.body;
       var cb = function(user, created) {
         if (created === true) {
           var username = user.dataValues.username;
@@ -14,10 +14,10 @@ module.exports = {
       };
 
       model.user.signUp(user, cb);
-    }, 
+    },
 
     signIn: function(req, res) {
-      var user = req.body; 
+      var user = req.body;
 
       var cb = function(user, correctPassword) {
         if (correctPassword) {
@@ -29,7 +29,6 @@ module.exports = {
       };
 
       model.user.signIn(user, cb);
-			
     }
   }
 };

@@ -1,5 +1,6 @@
 body {
-  background-color: #fff0e6;
+  background-image: url("https://images.unsplash.com/photo-1466814314367-45323ac74e2b?dpr=2&auto=format&crop=entropy&fit=crop&w=1500&h=735&q=80&cs=tinysrgb");
+  background-size: cover;
 }
 .welcome {
   text-align: center;
@@ -37,4 +38,28 @@ body {
 .myEatUp {
   display: inline-block;
   margin: 0;
+}
+
+.allEatups {
+  right: 200px;
+  top: 30px;
+}
+
+.myEatups {
+  background: rgba(255,255,255,0);
+  border: 0px;
+  left: 130px;
+  top: 5px;
+}
+
+.eatupsList {
+  width: 320px;
+}
+
+.eatupTitle {
+  color: #EEEEEE !important;
+}
+
+.yourEatUpTitle {
+  color: #EEEEEE !important;
 }

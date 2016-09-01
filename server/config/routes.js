@@ -2,7 +2,6 @@ var EatUpController = require('../controllers/eatUps.controller.js');
 var UserController = require('../controllers/user.controller.js');
 var router = require('express').Router();
 
-
 router.get('/sessions/allSessions', EatUpController.sessions.getAll);
 
 router.get('/sessions/userSessions', EatUpController.sessions.getUserSessions);
