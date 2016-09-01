@@ -23,7 +23,6 @@ class AppRouter extends React.Component {
   render () {
 
     return (
-      //Defines the routes for app and renders different components
       <Router history={ hashHistory }>
         <Route path="/" component={App}>
           <Route path="home" component={Home} onEnter={requireAuth}></Route>

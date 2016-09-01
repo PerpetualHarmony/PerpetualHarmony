@@ -37,13 +37,13 @@ class App extends React.Component {
   }
 
   getUserLocation() {
-    var that = this;
+    var innerThisBinding = this;
 
     if (navigator.geolocation) {
       console.log('Geolocation is supported!');
       var geoSuccess = function(position) {
-        that.setState({location: {lat: position.coords.latitude, long: position.coords.longitude}});
-        that.googlePlaces();
+        innerThisBinding.setState({location: {lat: position.coords.latitude, long: position.coords.longitude}});
+        innerThisBinding.googlePlaces();
       };
       navigator.geolocation.getCurrentPosition(geoSuccess);
     }
@@ -57,25 +57,23 @@ class App extends React.Component {
   }
 
   handleSubmit() {
-    // post this.state.search to database
     var place = this.state.autocomplete.getPlace();
     $.ajax({
       type: 'POST',
       url: 'http://localhost:3000/sessions/createMeetUp',
-      //How do we get the actual username
-      data: JSON.stringify({username: auth.getToken(), 
-                            locationName: place.name, 
+      data: JSON.stringify({username: auth.getToken(),
+                            locationName: place.name,
                             locationAddress: place.formatted_address}),
       contentType: 'application/json',
       success: (data) => {
-        this.setState(this.state); 
+        this.setState(this.state);
       }
     });
   }
 
   componentDidMount() {
     var input = document.getElementById('searchTextField');
-    var options = {componentRestrictions: {country: 'us'}};   
+    var options = {componentRestrictions: {country: 'us'}};
     this.setState({ autocomplete: new google.maps.places.Autocomplete(input, options) });
   }
 
@@ -83,8 +81,8 @@ class App extends React.Component {
     return (
       <div>
         <MyNav loggedIn = { this.state.loggedIn }
-               handleSearchChange = { this.handleSearchChange.bind(this) } 
-               handleSubmit = { this.handleSubmit.bind(this) } 
+               handleSearchChange = { this.handleSearchChange.bind(this) }
+               handleSubmit = { this.handleSubmit.bind(this) }
         />
         {this.props.children || <p>You are {!this.state.loggedIn && 'not'} logged in.</p>}
       </div>
